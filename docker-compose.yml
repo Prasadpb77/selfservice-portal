@@ -1,0 +1,25 @@
+
+services:
+  backend:
+    build:
+      dockerfile: ./Dockerfile.backend
+    container_name: backend
+    image: flask_backend:1.0
+    ports:
+      - "5000:5000"
+    deploy:
+      restart_policy:
+        condition: on-failure
+    
+  frontend:
+    build:
+      dockerfile: ./Dockerfile.frontend
+    container_name: frontend
+    image: nginx_webserver:1.0
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    deploy:
+      restart_policy:
+        condition: on-failure
